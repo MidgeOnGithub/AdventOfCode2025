@@ -5,7 +5,6 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>AdventOfCode2025</RootNamespace>
         <LangVersion>preview</LangVersion>
     </PropertyGroup>
 

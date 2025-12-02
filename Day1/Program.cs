@@ -1,4 +1,4 @@
-﻿using AdventOfCode2025;
+﻿using Day1;
 
 string[] inputs = File.ReadAllLines("input.txt");
 

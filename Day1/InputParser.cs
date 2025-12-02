@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2025;
+﻿namespace Day1;
 
 public static class InputParser
 {
