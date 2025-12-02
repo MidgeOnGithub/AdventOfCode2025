@@ -6,6 +6,13 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>AdventOfCode2025</RootNamespace>
+        <LangVersion>preview</LangVersion>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Update="input.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
 
 </Project>
