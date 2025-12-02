@@ -9,14 +9,22 @@ public class Dial
     {
         // Clamp distance to a range of 0-99.
         if (distance > 99)
+        {
+            ZeroesSeen += distance / 100;
             distance %= 100;
+        }
 
         switch (direction)
         {
             case Direction.Left:
                 // Prevent underflow.
                 if (distance > Value)
+                {
+                    if (Value != 0) // Prevent double-counts.
+                        ZeroesSeen++;
+
                     Value += 100;
+                }
 
                 Value -= distance;
                 break;
@@ -26,7 +34,12 @@ public class Dial
 
                 // Wrap around.
                 if (Value > 99)
+                {
                     Value -= 100;
+                    if (Value != 0) // Prevent double-counts.
+                        ZeroesSeen++;
+                }
+
                 break;
 
             default:

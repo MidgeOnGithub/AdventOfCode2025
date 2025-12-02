@@ -5,7 +5,8 @@ namespace Tests;
 public class Day1
 {
     [Test]
-    public async Task ExampleProducesExpectedOutput()
+    [Skip("Invalid for Part 2")]
+    public async Task Part1ExampleProducesExpectedOutput()
     {
         // Arrange
         List<(Direction, uint)> instructions =
@@ -33,6 +34,37 @@ public class Day1
     }
 
     [Test]
+    public async Task Part2ExampleProducesExpectedOutput()
+    {
+        // Arrange
+        List<(Direction, uint)> instructions =
+        [
+            (Direction.Left, 68),
+            (Direction.Left, 30),
+            (Direction.Right, 48),
+            (Direction.Left, 5),
+            (Direction.Right, 60),
+            (Direction.Left, 55),
+            (Direction.Left, 1),
+            (Direction.Left, 99),
+            (Direction.Right, 14),
+            (Direction.Left, 82),
+        ];
+        const uint expectedZeroesSeen = 6;
+        Dial dial = new();
+
+        // Act
+        foreach ((Direction direction, uint distance) in instructions)
+        {
+            dial.Rotate(direction, distance);
+            Console.WriteLine($"Rotated {direction.ToString()} {distance}, ended at {dial.Value} with {dial.ZeroesSeen} zeroes seen.");
+        }
+
+        // Assert
+        await Assert.That(dial.ZeroesSeen).IsEqualTo(expectedZeroesSeen);
+    }
+
+    [Test]
     public async Task OverRotationsDoNotOverflow()
     {
         // Arrange
@@ -44,7 +76,6 @@ public class Day1
         const uint secondDistance = 983;
         const uint expectedSecondValue = 0;
 
-        const uint expectedZeroesSeen = 1;
         Dial dial = new();
 
         // Act
@@ -56,6 +87,5 @@ public class Day1
         // Assert
         await Assert.That(firstValue).IsEqualTo(expectedFirstValue);
         await Assert.That(secondValue).IsEqualTo(expectedSecondValue);
-        await Assert.That(dial.ZeroesSeen).IsEqualTo(expectedZeroesSeen);
     }
 }

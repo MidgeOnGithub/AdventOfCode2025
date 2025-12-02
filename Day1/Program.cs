@@ -12,4 +12,4 @@ foreach ((Direction direction, uint distance) in instructions)
     Console.WriteLine($"Rotated {direction.ToString()} {distance}, ended at {dial.Value} with {dial.ZeroesSeen} zeroes seen.");
 }
 
-Console.WriteLine(dial.ZeroesSeen);
+Console.WriteLine($"Zeroes seen: {dial.ZeroesSeen}");
