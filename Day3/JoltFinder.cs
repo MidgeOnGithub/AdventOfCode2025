@@ -14,29 +14,44 @@ public class JoltFinder
 
     private IReadOnlyList<uint> FindHighestJolt(IReadOnlyList<uint> bank)
     {
-        uint firstDigit = 0;
-        uint secondDigit = 0;
+        const int selectionCapacity = 12;
+        var selected = new List<uint>(new uint[selectionCapacity]); // Initialize with zeroes.
 
+        // Search through the bank.
         for (var i = 0; i < bank.Count; i++)
         {
             uint battery = bank[i];
+            int remainingBatteries = bank.Count - 1 - i;
 
-            // Upgrade the first digit only if at least one more battery is in the bank.
-            if (battery > firstDigit && i != bank.Count - 1)
+            // We can only edit our selections where there are enough batteries left to fill them.
+            int start = Math.Max(0, selectionCapacity - 1 - remainingBatteries);
+            for (int j = start; j < 12; j++)
             {
-                firstDigit = battery;
-                secondDigit = 0;
-                continue;
-            }
+                if (battery <= selected[j])
+                    continue;
 
-            // Upgrade the second digit whenever possible.
-            if (battery > secondDigit)
-                secondDigit = battery;
+                selected[j] = battery;
+
+                // Re-zero the remaining selections.
+                for (int k = j + 1; k < 12; k++)
+                    selected[k] = 0;
+
+                break;
+            }
         }
 
-        uint jolt = secondDigit + 10 * firstDigit;
-        Sum += jolt;
+        // Sum the selected batteries as if they were a large number.
+        ulong jolt = 0;
+        for (int i = selectionCapacity - 1; i >= 0; i--)
+        {
+            uint battery = selected[i];
 
-        return [ firstDigit, secondDigit ];
+            // Since we're iterating in reverse, each processed battery's magnitude is increased.
+            double digitAdjustment = Math.Pow(10, selectionCapacity - 1 - i);
+            jolt += (ulong) (battery * digitAdjustment);
+        }
+
+        Sum += jolt;
+        return selected;
     }
 }
