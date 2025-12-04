@@ -1,10 +1,15 @@
-﻿namespace Day4;
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Tests")]
+
+namespace Day4;
+
 
 public class ForkliftHelper
 {
     public ulong AccessibleRollCount { get; private set; }
 
-    public IReadOnlyList<(int row, int column)> FindAccessibleRolls(IReadOnlyList<IReadOnlyList<int>> rollPlacements)
+    protected internal IReadOnlyList<(int row, int column)> FindAccessibleRolls(IReadOnlyList<IReadOnlyList<int>> rollPlacements)
     {
         const int threshold = 4;
         int columns = rollPlacements[0].Count;
@@ -64,5 +69,21 @@ public class ForkliftHelper
         }
 
         return accessibleRolls;
+    }
+
+    public bool TryRemoveAccessibleRolls(List<List<int>> rollPlacements, out IReadOnlyList<(int row, int column)> removedRolls)
+    {
+        removedRolls = new List<(int row, int column)>();
+
+        var removableRolls = FindAccessibleRolls(rollPlacements);
+        if (removableRolls.Count == 0)
+            return false;
+
+        // Remove the rolls by setting the value to zero.
+        foreach ((int row, int column) rollToRemove in removableRolls)
+            rollPlacements[rollToRemove.row][rollToRemove.column] = 0;
+
+        removedRolls = removableRolls;
+        return true;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Day4;
-using System.Threading.Tasks;
 
 namespace Tests;
 
@@ -40,5 +39,33 @@ public class Day4
         // Assert
         await Assert.That(accessibleRolls).IsEquivalentTo(expectedAccessibleRolls);
         await Assert.That(helper.AccessibleRollCount).IsEqualTo(expectedAccessibleRollCount);
+    }
+
+    [Test]
+    public async Task Part2ExampleProducesExpectedOutput()
+    {
+        // Arrange
+        var arrangement = new List<List<int>>
+        {
+            new () { 0, 0, 1, 1, 0, 1, 1, 1, 1, 0 },
+            new () { 1, 1, 1, 0, 1, 0, 1, 0, 1, 1 },
+            new () { 1, 1, 1, 1, 1, 0, 1, 0, 1, 1 },
+            new () { 1, 0, 1, 1, 1, 1, 0, 0, 1, 0 },
+            new () { 1, 1, 0, 1, 1, 1, 1, 0, 1, 1 },
+            new () { 0, 1, 1, 1, 1, 1, 1, 1, 0, 1 },
+            new () { 0, 1, 0, 1, 0, 1, 0, 1, 1, 1 },
+            new () { 1, 0, 1, 1, 1, 0, 1, 1, 1, 1 },
+            new () { 0, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
+            new () { 1, 0, 1, 0, 1, 1, 1, 0, 1, 0 },
+        };
+        const ulong expectedRemovedRollCount = 43;
+
+        // Act
+        var helper = new ForkliftHelper();
+        while(helper.TryRemoveAccessibleRolls(arrangement, out var removedRolls))
+            Console.WriteLine($"Removed {removedRolls.Count} rolls: {string.Join(", ", removedRolls)}");
+
+        // Assert
+        await Assert.That(helper.AccessibleRollCount).IsEqualTo(expectedRemovedRollCount);
     }
 }
