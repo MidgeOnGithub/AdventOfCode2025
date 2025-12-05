@@ -7,6 +7,8 @@ Console.WriteLine($"Fresh Ingredient Ranges: {freshRanges.Count}");
 Console.WriteLine($"Available Ingredient Count: {available.Count}");
 
 var finder = new ProduceFinder();
+ulong totalAvailableFreshIngredients = finder.CountPossibleIngredients(freshRanges);
 finder.FindUnspoiledFood(freshRanges, available);
 
-Console.WriteLine($"Fresh Ingredient Count: {finder.Count}");
+Console.WriteLine($"Total possible fresh ingredients: {totalAvailableFreshIngredients}");
+Console.WriteLine($"Unspoiled ingredient count: {finder.UnspoiledIngredientsCount}");

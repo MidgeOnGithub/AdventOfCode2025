@@ -46,6 +46,21 @@ public class Day5
 
         // Assert
         await Assert.That(result).IsEquivalentTo(expectedFreshIngredients);
-        await Assert.That(finder.Count).IsEqualTo(expectedCount);
+        await Assert.That(finder.UnspoiledIngredientsCount).IsEqualTo(expectedCount);
+    }
+
+    [Test]
+    public async Task Part2ExampleProducesExpectedOutput()
+    {
+        // Arrange
+        var freshRanges = new List<(ulong lower, ulong upper)>{ (3, 5), (10, 14), (16, 20), (12, 18), };
+        const uint expectedCount = 14;
+        var finder = new ProduceFinder();
+
+        // Act
+        ulong possibleIngredients = finder.CountPossibleIngredients(freshRanges);
+
+        // Assert
+        await Assert.That(possibleIngredients).IsEqualTo(expectedCount);
     }
 }
