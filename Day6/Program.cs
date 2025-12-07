@@ -2,7 +2,10 @@
 
 string input = File.ReadAllText("input.txt");
 
-var problems = InputParser.ParsePart1(input);
-ulong result = ProblemSolver.Solve(problems);
+var part1Problems = InputParser.ParsePart1(input);
+ulong part1Result = ProblemSolver.Solve(part1Problems);
+Console.WriteLine($"Part 1 sum of problems: {part1Result}");
 
-Console.WriteLine($"Total sum of problems: {result}");
+var part2Problems = InputParser.ParsePart2(input);
+ulong part2Result = ProblemSolver.Solve(part2Problems);
+Console.WriteLine($"Part 2 sum of problems: {part2Result}");

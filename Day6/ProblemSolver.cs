@@ -1,6 +1,6 @@
 ﻿namespace Day6;
 
-public class ProblemSolver
+public static class ProblemSolver
 {
     public static ulong Solve(IReadOnlyList<Problem> problems)
     {
