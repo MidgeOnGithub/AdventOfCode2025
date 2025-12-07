@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Day7;
+﻿namespace Day7;
 
 using TachyonManifold = IReadOnlyList<IReadOnlyList<Node>>;
 
