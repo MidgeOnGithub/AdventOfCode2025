@@ -1,0 +1,4 @@
+﻿root = true
+
+[*input.txt]
+trim_trailing_whitespace = false
