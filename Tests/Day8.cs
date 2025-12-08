@@ -91,15 +91,57 @@ public class Day8
         };
         var expectedLargestCircuitSizes = new List<int> { 5, 4, 2 };
 
-        var finder = new CircuitFinder(circuitsToConnect);
+        var finder = new CircuitFinder();
 
         // Act
-        finder.CreateShortestCircuits(input);
+        finder.CreateShortestCircuits(input, circuitsToConnect);
         var largestCircuits = finder.NLargestCircuits(numberOfLargestCircuits);
         ulong largestCircuitsSize = finder.NLargestCircuitsSize(numberOfLargestCircuits);
 
         // Assert
         await Assert.That(largestCircuits.Select(c => c.Size)).IsEquivalentTo(expectedLargestCircuitSizes);
         await Assert.That(largestCircuitsSize).IsEquivalentTo(expectedSizeOfLargestCircuitsCombined);
+    }
+
+    [Test]
+    public async Task Part2ExampleProducesExpectedOutput()
+    {
+        // Arrange
+        var input = new List<JunctionBox>()
+        {
+            new(0, 162, 817, 812),
+            new(1, 57, 618, 57),
+            new(2, 906, 360, 560),
+            new(3, 592, 479, 940),
+            new(4, 352, 342, 300),
+            new(5, 466, 668, 158),
+            new(6, 542, 29, 236),
+            new(7, 431, 825, 988),
+            new(8, 739, 650, 466),
+            new(9, 52, 470, 668),
+            new(10, 216, 146, 977),
+            new(11, 819, 987, 18),
+            new(12, 117, 168, 530),
+            new(13, 805, 96, 715),
+            new(14, 346, 949, 466),
+            new(15, 970, 615, 88),
+            new(16, 941, 993, 340),
+            new(17, 862, 61, 35),
+            new(18, 984, 92, 344),
+            new(19, 425, 690, 689),
+        };
+        var expectedFinalPair = (
+            new JunctionBox(10, 216, 146, 977),
+            new JunctionBox(12, 117, 168, 530)
+        );
+
+        var finder = new CircuitFinder();
+
+        // Act
+        (JunctionBox, JunctionBox) pair = finder.FindFinalConnectingPair(input);
+
+        // Assert
+        await Assert.That(pair.Item1).IsEqualTo(expectedFinalPair.Item1);
+        await Assert.That(pair.Item2).IsEqualTo(expectedFinalPair.Item2);
     }
 }
