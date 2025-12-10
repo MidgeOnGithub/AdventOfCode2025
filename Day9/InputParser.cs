@@ -6,10 +6,10 @@ public static class InputParser
     {
         string[] lines = input.Split(Environment.NewLine);
 
-        // Determine points and grid size.
+        // Determine red tiles and grid size.
         var gridWidth = 1;
         var gridHeight = 1;
-        var tiles = new List<(int column, int row)>();
+        var redTiles = new List<Point>();
         foreach (string line in lines)
         {
             string[] parts = line.Split(',');
@@ -23,9 +23,10 @@ public static class InputParser
                 gridWidth = column + 1;
             if (row > gridHeight)
                 gridHeight = row + 1;
-            tiles.Add((column, row));
+            redTiles.Add((column, row));
         }
+        Console.WriteLine($"Added {redTiles.Count} red tiles with grid size {gridWidth}x{gridHeight}.");
 
-        return tiles;
+        return redTiles;
     }
 }

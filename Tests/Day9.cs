@@ -21,7 +21,18 @@ public class Day9
             "2,5\r\n"  +
             "2,3\r\n"  +
             "7,3";
-        var expectedPoints = new List<Point>()
+        /* # = Red, X = Green
+            0  1  2  3  4  5  6  7  8  9  10 11 12
+         0  .  .  .  .  .  .  .  .  .  .  .  .  .
+         1  .  .  .  .  .  .  .  #  X  X  X  #  .
+         2  .  .  .  .  .  .  .  X  X  X  X  X  .
+         3  .  .  #  X  X  X  X  #  X  X  X  X  .
+         4  .  .  X  X  X  X  X  X  X  X  X  X  .
+         5  .  .  #  X  X  X  X  X  X  #  X  X  .
+         6  .  .  .  .  .  .  .  .  .  X  X  X  .
+         7  .  .  .  .  .  .  .  .  .  #  X  #  .
+        */
+        var expectedRedTiles = new List<Point>
         {
             (7, 1),
             (11, 1),
@@ -34,17 +45,17 @@ public class Day9
         };
 
         // Act
-        IReadOnlyList<Point> points = InputParser.Parse(input);
+        IReadOnlyList<Point> redTiles = InputParser.Parse(input);
 
         // Assert
-        await Assert.That(points).IsEquivalentTo(expectedPoints);
+        await Assert.That(redTiles).IsEquivalentTo(expectedRedTiles);
     }
 
     [Test]
-    public async Task Part1ExampleProducesExpectedOutput()
+    public async Task Part1ExampleProducesExpectedOutputForPart1()
     {
         // Arrange
-        var redTiles = new List<Point>()
+        var redTiles = new List<Point>
         {
             (7, 1),
             (11, 1),
@@ -58,7 +69,41 @@ public class Day9
         const ulong expectedLargestArea = 50;
 
         // Act
-        (Point, Point) points = RectangleFinder.FindRectangle(redTiles, out ulong largestArea);
+        (Point, Point) bounds = RectangleFinder.FindRectanglePart1(redTiles, out ulong largestArea);
+
+        // Assert
+        await Assert.That(largestArea).IsEqualTo(expectedLargestArea);
+    }
+
+    [Test]
+    public async Task Part2ExampleProducesExpectedOutputForPart2()
+    {
+        // Arrange
+        /* # = Red, X = Green
+         .  .  .  .  .  .  .  .  .  .  .  .
+         .  .  .  .  .  .  #  X  X  X  #  .
+         .  .  .  .  .  .  X  X  X  X  X  .
+         .  #  X  X  X  X  #  X  X  X  X  .
+         .  X  X  X  X  X  X  X  X  X  X  .
+         .  #  X  X  X  X  X  X  #  X  X  .
+         .  .  .  .  .  .  .  .  X  X  X  .
+         .  .  .  .  .  .  .  .  #  X  #  .
+         */
+        var redTiles = new List<Point>
+        {
+            (7, 1),
+            (11, 1),
+            (11, 7),
+            (9, 7),
+            (9, 5),
+            (2, 5),
+            (2, 3),
+            (7, 3),
+        };
+        const ulong expectedLargestArea = 24;
+
+        // Act
+        (Point, Point) bounds = RectangleFinder.FindRectanglePart2(redTiles, out ulong largestArea);
 
         // Assert
         await Assert.That(largestArea).IsEqualTo(expectedLargestArea);
